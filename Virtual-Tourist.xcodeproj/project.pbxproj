@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		ACA468411F9F49E8001D43C2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA468401F9F49E8001D43C2 /* AppDelegate.swift */; };
-		ACA468431F9F49E8001D43C2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA468421F9F49E8001D43C2 /* ViewController.swift */; };
+		ACA468431F9F49E8001D43C2 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA468421F9F49E8001D43C2 /* MapViewController.swift */; };
 		ACA468461F9F49E8001D43C2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACA468441F9F49E8001D43C2 /* Main.storyboard */; };
 		ACA468481F9F49E8001D43C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACA468471F9F49E8001D43C2 /* Assets.xcassets */; };
 		ACA4684B1F9F49E8001D43C2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACA468491F9F49E8001D43C2 /* LaunchScreen.storyboard */; };
@@ -17,7 +17,7 @@
 /* Begin PBXFileReference section */
 		ACA4683D1F9F49E8001D43C2 /* Virtual-Tourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Virtual-Tourist.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACA468401F9F49E8001D43C2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		ACA468421F9F49E8001D43C2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		ACA468421F9F49E8001D43C2 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		ACA468451F9F49E8001D43C2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		ACA468471F9F49E8001D43C2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ACA4684A1F9F49E8001D43C2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -55,7 +55,7 @@
 			isa = PBXGroup;
 			children = (
 				ACA468401F9F49E8001D43C2 /* AppDelegate.swift */,
-				ACA468421F9F49E8001D43C2 /* ViewController.swift */,
+				ACA468421F9F49E8001D43C2 /* MapViewController.swift */,
 				ACA468441F9F49E8001D43C2 /* Main.storyboard */,
 				ACA468471F9F49E8001D43C2 /* Assets.xcassets */,
 				ACA468491F9F49E8001D43C2 /* LaunchScreen.storyboard */,
@@ -136,7 +136,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ACA468431F9F49E8001D43C2 /* ViewController.swift in Sources */,
+				ACA468431F9F49E8001D43C2 /* MapViewController.swift in Sources */,
 				ACA468411F9F49E8001D43C2 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -275,7 +275,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = NZGZ762EBZ;
+				DEVELOPMENT_TEAM = 3N8U68QA7Q;
 				INFOPLIST_FILE = "Virtual-Tourist/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mitul.Virtual-Tourist";
@@ -290,7 +290,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = NZGZ762EBZ;
+				DEVELOPMENT_TEAM = 3N8U68QA7Q;
 				INFOPLIST_FILE = "Virtual-Tourist/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mitul.Virtual-Tourist";
