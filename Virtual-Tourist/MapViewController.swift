@@ -9,13 +9,19 @@
 import UIKit
 import MapKit
 
-class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var barButton: UIBarButtonItem!
     var annotations = [MKPointAnnotation]()
+    var flag = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        textView.isHidden = true
+        mapView.delegate = self
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.addPin))
         self.mapView.addGestureRecognizer(longPress)
@@ -27,9 +33,68 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
         setMapView()
     }
     
+    @objc func addPin(gesture: UIGestureRecognizer) {
+        
+        if gesture.state == .ended {
+            let point = gesture.location(in: mapView)
+            let coordinate = self.mapView.convert(point, toCoordinateFrom: mapView)
+            
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordinate
+            annotation.title = "1234"
+            annotation.subtitle = "qwsedfrg"
+            mapView.addAnnotation(annotation)
+            self.annotations.append(annotation)
+            
+        }
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        let reuseID = "pin"
+        
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseID) as? MKPinAnnotationView
+        
+        if pinView == nil {
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
+            pinView?.canShowCallout = false
+            pinView?.pinTintColor = .red
+        } else {
+            pinView?.annotation = annotation
+        }
+        return pinView
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        if flag {
+            mapView.removeAnnotation(view.annotation!)
+        } else {
+            print("opening view controller")
+            mapView.deselectAnnotation(view.annotation, animated: true)
+        }
+    }
+    
+    @IBAction func editPressed(_ sender: Any) {
+        if flag {
+            self.barButton.title = "Edit"
+        } else {
+            self.barButton.title = "Done"
+        }
+        textView.isHidden = flag
+        flag = !flag
+    }
+}
+
+extension MapViewController: UIGestureRecognizerDelegate {
     func setMapView() {
         if !UserDefaults.standard.bool(forKey: "HasLaunchedBefore") {
             UserDefaults.standard.set(true, forKey: "HasLaunchedBefore")
+            let x = mapView.visibleMapRect
+            
+            UserDefaults.standard.set(x.origin.x, forKey: "OriginX")
+            UserDefaults.standard.set(x.origin.y, forKey: "OriginY")
+            UserDefaults.standard.set(x.size.height, forKey: "Height")
+            UserDefaults.standard.set(x.size.width, forKey: "Width")
         } else {
             var x = MKMapRect()
             
@@ -56,21 +121,4 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIGestureRecognize
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
-    
-    @objc func addPin(gesture: UIGestureRecognizer) {
-        
-        if gesture.state == .ended {
-            let point = gesture.location(in: mapView)
-            let coordinate = self.mapView.convert(point, toCoordinateFrom: mapView)
-            
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = coordinate
-            self.mapView.addAnnotation(annotation)
-            self.annotations.append(annotation)
-        }
-    }
-    
-    @IBAction func editPressed(_ sender: Any) {
-    }
 }
-

@@ -20,25 +20,40 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Fzq-WC-nte">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                             </mapView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Tap Pins To Delete" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZUf-5q-uZj">
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="l9D-J7-dml"/>
+                                </constraints>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Fzq-WC-nte" secondAttribute="trailing" id="1Ae-qk-fzQ"/>
                             <constraint firstItem="Fzq-WC-nte" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="50s-lG-F3K"/>
+                            <constraint firstItem="ZUf-5q-uZj" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="KiF-mC-b4k"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ZUf-5q-uZj" secondAttribute="trailing" id="aEo-Pg-gnd"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Fzq-WC-nte" secondAttribute="bottom" id="dnN-JN-UmE"/>
                             <constraint firstItem="Fzq-WC-nte" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="fJe-2T-rLR"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ZUf-5q-uZj" secondAttribute="bottom" id="fsT-Rj-LeK"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Virtual Tourist" id="NIN-gE-hJk">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="3yO-wN-KFO">
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="3yO-wN-KFO">
                             <connections>
                                 <action selector="editPressed:" destination="BYZ-38-t0r" id="qOv-F0-usI"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="barButton" destination="3yO-wN-KFO" id="yFo-Ml-liU"/>
                         <outlet property="mapView" destination="Fzq-WC-nte" id="TUX-G5-1Fn"/>
+                        <outlet property="textView" destination="ZUf-5q-uZj" id="hkL-pl-DM7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
