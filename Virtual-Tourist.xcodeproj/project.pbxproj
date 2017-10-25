@@ -19,6 +19,7 @@
 		ACB61C371FA0BAAE0023F6DF /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB61C361FA0BAAE0023F6DF /* Model.swift */; };
 		ACB61C391FA0BD3E0023F6DF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB61C381FA0BD3E0023F6DF /* Constants.swift */; };
 		ACB61C3C1FA0CD360023F6DF /* FlickrImageCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB61C3B1FA0CD360023F6DF /* FlickrImageCollectionCell.swift */; };
+		ACB61C3E1FA0E58D0023F6DF /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB61C3D1FA0E58D0023F6DF /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		ACB61C361FA0BAAE0023F6DF /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		ACB61C381FA0BD3E0023F6DF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		ACB61C3B1FA0CD360023F6DF /* FlickrImageCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrImageCollectionCell.swift; sourceTree = "<group>"; };
+		ACB61C3D1FA0E58D0023F6DF /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 			children = (
 				AC71DB721F9FC26500176822 /* MyViewControllerClass.swift */,
 				ACB61C331FA095020023F6DF /* GCDBlackBox.swift */,
+				ACB61C3D1FA0E58D0023F6DF /* Extensions.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -194,6 +197,7 @@
 				ACB61C311FA0900E0023F6DF /* FlickrClient.swift in Sources */,
 				AC71DB711F9FB78B00176822 /* AlbumViewController.swift in Sources */,
 				ACA468431F9F49E8001D43C2 /* MapViewController.swift in Sources */,
+				ACB61C3E1FA0E58D0023F6DF /* Extensions.swift in Sources */,
 				ACB61C3C1FA0CD360023F6DF /* FlickrImageCollectionCell.swift in Sources */,
 				ACB61C341FA095020023F6DF /* GCDBlackBox.swift in Sources */,
 				ACA468411F9F49E8001D43C2 /* AppDelegate.swift in Sources */,

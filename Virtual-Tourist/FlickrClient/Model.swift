@@ -22,6 +22,7 @@ struct Photo {
         self.secret = photo["secret"] as? String ?? ""
         self.owner = photo["owner"] as? String ?? ""
         self.isPublic = ((photo["ispublic"] as? Int) == 1)
+        self.server = photo["server"] as? String ?? ""
     }
 }
 

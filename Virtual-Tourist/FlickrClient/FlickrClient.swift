@@ -6,12 +6,14 @@
 //  Copyright © 2017 mitul jindal. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class FlickrClient {
     
     var page = 1
     var lastPage = 2
+    
+    var appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     func getPhotos(lat: Double, lon: Double) {
         
@@ -64,9 +66,13 @@ class FlickrClient {
                 }
                 var photos: FlickrPhotos
                 if let a = result["photos"] as? [String: AnyObject] {
+                    print("a: \(a)")
                     photos = FlickrPhotos(a)
                     self.lastPage = photos.lastPage
                     self.page += 1
+                    self.appDelegate.photos = photos.photos
+                    self.appDelegate.isData = true
+                    NotificationCenter.default.post(name: .updatedPhotos, object: nil)
                 }
             }
             catch {
