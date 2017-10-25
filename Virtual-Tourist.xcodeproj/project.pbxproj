@@ -16,6 +16,8 @@
 		ACA4684B1F9F49E8001D43C2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACA468491F9F49E8001D43C2 /* LaunchScreen.storyboard */; };
 		ACB61C311FA0900E0023F6DF /* FlickrClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB61C301FA0900E0023F6DF /* FlickrClient.swift */; };
 		ACB61C341FA095020023F6DF /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB61C331FA095020023F6DF /* GCDBlackBox.swift */; };
+		ACB61C371FA0BAAE0023F6DF /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB61C361FA0BAAE0023F6DF /* Model.swift */; };
+		ACB61C391FA0BD3E0023F6DF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB61C381FA0BD3E0023F6DF /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		ACA4684C1F9F49E8001D43C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ACB61C301FA0900E0023F6DF /* FlickrClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrClient.swift; sourceTree = "<group>"; };
 		ACB61C331FA095020023F6DF /* GCDBlackBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
+		ACB61C361FA0BAAE0023F6DF /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		ACB61C381FA0BD3E0023F6DF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +82,8 @@
 			isa = PBXGroup;
 			children = (
 				ACB61C301FA0900E0023F6DF /* FlickrClient.swift */,
+				ACB61C361FA0BAAE0023F6DF /* Model.swift */,
+				ACB61C381FA0BD3E0023F6DF /* Constants.swift */,
 			);
 			path = FlickrClient;
 			sourceTree = "<group>";
@@ -172,12 +178,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACB61C371FA0BAAE0023F6DF /* Model.swift in Sources */,
 				AC71DB731F9FC26500176822 /* MyViewControllerClass.swift in Sources */,
 				ACB61C311FA0900E0023F6DF /* FlickrClient.swift in Sources */,
 				AC71DB711F9FB78B00176822 /* AlbumViewController.swift in Sources */,
 				ACA468431F9F49E8001D43C2 /* MapViewController.swift in Sources */,
 				ACB61C341FA095020023F6DF /* GCDBlackBox.swift in Sources */,
 				ACA468411F9F49E8001D43C2 /* AppDelegate.swift in Sources */,
+				ACB61C391FA0BD3E0023F6DF /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

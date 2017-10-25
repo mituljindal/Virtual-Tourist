@@ -17,7 +17,7 @@ class AlbumViewController: MyViewController, UICollectionViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        FlickrClient.sharedInstance().getPhotos(lat: location.latitude, lon: location.longitude, page: 1)
+        FlickrClient.sharedInstance().getPhotos(lat: location.latitude, lon: location.longitude)
         
         setMap()
     }

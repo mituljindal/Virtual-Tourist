@@ -69,7 +69,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="9ad-2J-6Cx">
-                                <rect key="frame" x="0.0" y="64" width="375" height="150"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="chP-WT-fTw"/>
                                 </constraints>
@@ -95,7 +95,7 @@
         <!--Navigation Controller-->
         <scene sceneID="sSS-MM-zNd">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4ZS-Sk-VF3" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="yo" automaticallyAdjustsScrollViewInsets="NO" id="4ZS-Sk-VF3" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="6d6-NU-P0P">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -109,24 +109,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BYp-7j-0l5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-358" y="134"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="dCh-r8-nGc">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cwO-Fr-D4Y" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Gjd-l8-Sn3">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="kdu-ar-q4i" kind="relationship" relationship="rootViewController" id="aXH-a9-YVn"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="a2K-fJ-9ge" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-358" y="853"/>
         </scene>
     </scenes>
 </document>
