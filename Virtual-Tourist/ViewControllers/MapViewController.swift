@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class MapViewController: UIViewController, MKMapViewDelegate {
+class MapViewController: MyViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var textView: UITextView!
@@ -49,27 +49,13 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        
-        let reuseID = "pin"
-        
-        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseID) as? MKPinAnnotationView
-        
-        if pinView == nil {
-            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
-            pinView?.canShowCallout = false
-            pinView?.pinTintColor = .red
-        } else {
-            pinView?.annotation = annotation
-        }
-        return pinView
-    }
-    
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         if flag {
             mapView.removeAnnotation(view.annotation!)
         } else {
-            print("opening view controller")
+            let controller = storyboard?.instantiateViewController(withIdentifier: "AlbumViewController") as! AlbumViewController
+            controller.location = (view.annotation?.coordinate)!
+            self.navigationController?.pushViewController(controller, animated: true)
             mapView.deselectAnnotation(view.annotation, animated: true)
         }
     }

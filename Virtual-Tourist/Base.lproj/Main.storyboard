@@ -60,6 +60,38 @@
             </objects>
             <point key="canvasLocation" x="476" y="133.5832083958021"/>
         </scene>
+        <!--Album View Controller-->
+        <scene sceneID="yFc-7x-vq2">
+            <objects>
+                <viewController storyboardIdentifier="AlbumViewController" id="kdu-ar-q4i" customClass="AlbumViewController" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="z4o-Ho-Zka">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="9ad-2J-6Cx">
+                                <rect key="frame" x="0.0" y="64" width="375" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="chP-WT-fTw"/>
+                                </constraints>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="9ad-2J-6Cx" firstAttribute="leading" secondItem="4Rd-BF-PDs" secondAttribute="leading" id="3Jt-t9-dzY"/>
+                            <constraint firstItem="4Rd-BF-PDs" firstAttribute="trailing" secondItem="9ad-2J-6Cx" secondAttribute="trailing" id="TtW-sV-NcO"/>
+                            <constraint firstItem="9ad-2J-6Cx" firstAttribute="top" secondItem="4Rd-BF-PDs" secondAttribute="top" id="bfQ-vr-Q1K"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="4Rd-BF-PDs"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Tc8-Pk-oHa"/>
+                    <connections>
+                        <outlet property="mapView" destination="9ad-2J-6Cx" id="UcH-2h-cxa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0Kv-Mz-j1a" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="476" y="858.62068965517244"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="sSS-MM-zNd">
             <objects>
@@ -77,6 +109,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BYp-7j-0l5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-358" y="134"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="dCh-r8-nGc">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cwO-Fr-D4Y" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Gjd-l8-Sn3">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="kdu-ar-q4i" kind="relationship" relationship="rootViewController" id="aXH-a9-YVn"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="a2K-fJ-9ge" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-358" y="853"/>
         </scene>
     </scenes>
 </document>
