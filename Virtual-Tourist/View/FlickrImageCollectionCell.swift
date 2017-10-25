@@ -18,13 +18,13 @@ class FlickrImageCollectionCell: UICollectionViewCell {
     var appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     func initiate() {
+        activityIndicator.startAnimating()
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.center = self.flickrImage.center
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        self.flickrImage.addSubview(activityIndicator)
         if !appDelegate.isData {
             NotificationCenter.default.addObserver(self, selector: #selector(getImage), name: .updatedPhotos, object: nil)
-            activityIndicator.startAnimating()
-            activityIndicator.hidesWhenStopped = true
-            activityIndicator.center = self.flickrImage.center
-            activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
-            self.flickrImage.addSubview(activityIndicator)
         }
         else {
             getImage()
