@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Photo {
+struct FPhoto {
     var farm = Int()
     var id = String()
     var secret = String()
@@ -28,13 +28,13 @@ struct Photo {
 
 struct FlickrPhotos {
     var lastPage = Int()
-    var photos = [Photo]()
+    var photos = [FPhoto]()
     
     init(_ dict: [String: AnyObject]) {
         self.lastPage = dict["pages"] as? Int ?? 2
         guard let arr = dict["photo"] as? [[String: AnyObject]] else { return }
         for a in arr {
-            self.photos.append(Photo(a))
+            self.photos.append(FPhoto(a))
         }
     }
 }
