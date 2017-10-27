@@ -12,49 +12,41 @@ import MapKit
 
 class AlbumViewController: MyViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
+    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var collectionViewFlowLayout: UICollectionViewFlowLayout!
     
     var location: Location?
-    var count: Int! = 1
+    var count: Int!
+    var data: Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        FlickrClient.sharedInstance().getPhotos(lat: location!.latitude, lon: location!.longitude)
-        
         setView()
-//        setFR()
     }
     
-//    func setFR() {
-//        let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "Photo")
-//        fr.sortDescriptors = [NSSortDescriptor(key: "data", ascending: true)]
-//
-//        fr.predicate = NSPredicate(format: "Location = %@", argumentArray: [location!])
-//
-//        fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: delegate.stack.context, sectionNameKeyPath: nil, cacheName: nil)
+//    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+//        
+//        guard let _ = anObject as? Photo else {
+//            preconditionFailure("No location changes")
+//        }
+//        
+//        performUIUpdatesOnMain {
+//            self.collectionView.reloadData()
+//        }
 //    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         print(count)
-        if count == 0 {
-            return 21
-        }
-        return count
-//        return 1
+        return (fetchedResultsController.fetchedObjects?.count)!
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FlickrCell", for: indexPath) as! FlickrImageCollectionCell
-        if count == 0 {
-            cell.index = indexPath.row
-            cell.location = location
-            cell.initiate()
-        } else {
-            let photo = fetchedResultsController.object(at: indexPath) as! Photo
-            cell.flickrImage.image = UIImage(data: photo.data! as Data)
-        }
+        let photo = fetchedResultsController.object(at: indexPath) as! Photo
+        
+        cell.flickrImage.image = UIImage(data: photo.data! as Data)
         return cell
     }
     
@@ -68,15 +60,18 @@ class AlbumViewController: MyViewController, UICollectionViewDataSource, UIColle
             do {
                 try fc.performFetch()
                 count = fc.fetchedObjects?.count
-                if let results = fc.fetchedObjects as? [Photo] {
-                    print("getting in: \(results)")
-                    performUIUpdatesOnMain {
-//                        self.mapView.addAnnotations(results)
+                if count != 0 {
+                    data = true
+                } else {
+                    data = false
+                    FlickrClient.sharedInstance().getPhotos(location: location!) { count in
                     }
                 }
-                print("getting out")
             } catch let e as NSError {
                 print("Error while trying to perform a search: \n\(e)\n\(fetchedResultsController)")
+                data = false
+                FlickrClient.sharedInstance().getPhotos(location: location!) { count in
+                }
             }
         }
     }

@@ -27,7 +27,8 @@ struct FPhoto {
 }
 
 struct FlickrPhotos {
-    var lastPage = Int()
+    var page = 1
+    var lastPage = 2
     var photos = [FPhoto]()
     
     init(_ dict: [String: AnyObject]) {

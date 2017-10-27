@@ -4,7 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -128,6 +128,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Tc8-Pk-oHa"/>
                     <connections>
+                        <outlet property="collectionView" destination="YTO-Lc-SO3" id="z6A-d0-42U"/>
                         <outlet property="collectionViewFlowLayout" destination="SXa-jN-Y4c" id="yow-l9-QXK"/>
                         <outlet property="mapView" destination="9ad-2J-6Cx" id="UcH-2h-cxa"/>
                     </connections>
