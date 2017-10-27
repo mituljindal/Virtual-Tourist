@@ -15,8 +15,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var photos = [FPhoto]()
     var isData = false
+    let stack = CoreDataStack(modelName: "Model")!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        stack.autoSave(5)
         // Override point for customization after application launch.
         return true
     }

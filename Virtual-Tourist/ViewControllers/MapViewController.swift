@@ -8,13 +8,14 @@
 
 import UIKit
 import MapKit
+import CoreData
 
 class MapViewController: MyViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var barButton: UIBarButtonItem!
-    var annotations = [MKPointAnnotation]()
+    var annotations = [NSManagedObject]()
     var flag = false
     
     override func viewDidLoad() {
@@ -30,7 +31,37 @@ class MapViewController: MyViewController {
         panGesture.delegate = self
         self.mapView.addGestureRecognizer(panGesture)
         
+        let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "Location")
+        fr.sortDescriptors = [NSSortDescriptor(key: "latitude", ascending: true)]
+        
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: delegate.stack.context, sectionNameKeyPath: nil, cacheName: nil)
+        
         setMapView()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        
+        guard let location = anObject as? Location else {
+            preconditionFailure("No location changes")
+        }
+        
+        performUIUpdatesOnMain {
+            
+            switch type {
+            case .insert:
+                self.mapView.addAnnotation(location)
+                
+            case .delete:
+                self.mapView.removeAnnotation(location)
+            
+            case .move:
+                self.mapView.removeAnnotation(location)
+                self.mapView.addAnnotation(location)
+            
+            case .update:
+                fatalError("can't be done")
+            }
+        }
     }
     
     @objc func addPin(gesture: UIGestureRecognizer) {
@@ -41,17 +72,21 @@ class MapViewController: MyViewController {
             
             let annotation = MKPointAnnotation()
             annotation.coordinate = coordinate
-            annotation.title = "1234"
-            annotation.subtitle = "qwsedfrg"
-            mapView.addAnnotation(annotation)
-            self.annotations.append(annotation)
-            
+            self.save(annotation.coordinate)
         }
+    }
+    
+    func save(_ location: CLLocationCoordinate2D) {
+
+        let _ = Location(latitude: location.latitude, longitude: location.longitude, context: fetchedResultsController.managedObjectContext)
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         if flag {
-            mapView.removeAnnotation(view.annotation!)
+            
+            let object = view.annotation as! Location
+            fetchedResultsController.managedObjectContext.delete(object)
+            
         } else {
             let controller = storyboard?.instantiateViewController(withIdentifier: "AlbumViewController") as! AlbumViewController
             controller.location = (view.annotation?.coordinate)!
@@ -69,42 +104,22 @@ class MapViewController: MyViewController {
         textView.isHidden = flag
         flag = !flag
     }
+    
+    override func executeSearch() {
+        
+        if let fc = fetchedResultsController {
+            do {
+                try fc.performFetch()
+                if let results = fc.fetchedObjects as? [Location] {
+                    
+                    performUIUpdatesOnMain {
+                        self.mapView.addAnnotations(results)
+                    }
+                }
+            } catch let e as NSError {
+                print("Error while trying to perform a search: \n\(e)\n\(fetchedResultsController)")
+            }
+        }
+    }
 }
 
-extension MapViewController: UIGestureRecognizerDelegate {
-    func setMapView() {
-        if !UserDefaults.standard.bool(forKey: "HasLaunchedBefore") {
-            UserDefaults.standard.set(true, forKey: "HasLaunchedBefore")
-            let x = mapView.visibleMapRect
-            
-            UserDefaults.standard.set(x.origin.x, forKey: "OriginX")
-            UserDefaults.standard.set(x.origin.y, forKey: "OriginY")
-            UserDefaults.standard.set(x.size.height, forKey: "Height")
-            UserDefaults.standard.set(x.size.width, forKey: "Width")
-        } else {
-            var x = MKMapRect()
-            
-            x.origin.x = UserDefaults.standard.double(forKey: "OriginX")
-            x.origin.y = UserDefaults.standard.double(forKey: "OriginY")
-            x.size.height = UserDefaults.standard.double(forKey: "Height")
-            x.size.width = UserDefaults.standard.double(forKey: "Width")
-            
-            mapView.setVisibleMapRect(x, animated: true)
-        }
-    }
-    
-    @objc func didDragMap(_ sender: UIGestureRecognizer) {
-        if sender.state == .ended {
-            let x = mapView.visibleMapRect
-            
-            UserDefaults.standard.set(x.origin.x, forKey: "OriginX")
-            UserDefaults.standard.set(x.origin.y, forKey: "OriginY")
-            UserDefaults.standard.set(x.size.height, forKey: "Height")
-            UserDefaults.standard.set(x.size.width, forKey: "Width")
-        }
-    }
-    
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
-    }
-}

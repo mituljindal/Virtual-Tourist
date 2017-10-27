@@ -8,8 +8,20 @@
 
 import UIKit
 import MapKit
+import CoreData
 
-class MyViewController: UIViewController, MKMapViewDelegate {
+class MyViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsControllerDelegate {
+    
+    var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>! {
+        didSet {
+            // Whenever the frc changes, we execute the search and
+            // reload the table
+            fetchedResultsController?.delegate = self
+            executeSearch()
+        }
+    }
+    
+    let delegate = UIApplication.shared.delegate as! AppDelegate
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
@@ -27,4 +39,6 @@ class MyViewController: UIViewController, MKMapViewDelegate {
         return pinView
     }
     
+    func executeSearch() {
+    }
 }

@@ -66,7 +66,6 @@ class FlickrClient {
                 }
                 var photos: FlickrPhotos
                 if let a = result["photos"] as? [String: AnyObject] {
-                    print("a: \(a)")
                     photos = FlickrPhotos(a)
                     self.lastPage = photos.lastPage
                     self.page += 1
