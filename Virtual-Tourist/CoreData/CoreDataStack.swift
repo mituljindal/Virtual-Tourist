@@ -87,6 +87,7 @@ extension CoreDataStack {
     func saveContext() throws {
         if context.hasChanges {
             try context.save()
+            print("save successful")
         }
     }
     
@@ -95,7 +96,6 @@ extension CoreDataStack {
         if delayInSeconds > 0 {
             do {
                 try saveContext()
-                print("Autosaving")
             } catch {
                 print("Error while autosaving")
             }

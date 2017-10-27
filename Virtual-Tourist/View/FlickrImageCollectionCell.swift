@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class FlickrImageCollectionCell: UICollectionViewCell {
     
@@ -17,7 +18,12 @@ class FlickrImageCollectionCell: UICollectionViewCell {
     
     var appDelegate = UIApplication.shared.delegate as! AppDelegate
     
+    var location: Location?
+    
+    var flag = false
+    
     func initiate() {
+
         activityIndicator.startAnimating()
         activityIndicator.hidesWhenStopped = true
         activityIndicator.center = self.flickrImage.center
@@ -32,6 +38,14 @@ class FlickrImageCollectionCell: UICollectionViewCell {
     }
     
     @objc func getImage() {
+        
+        if flag {
+            self.activityIndicator.stopAnimating()
+            return
+        } else {
+            flag = true
+        }
+        
         let photo = appDelegate.photos[index]
         let url =  URL(string: "https://farm\(photo.farm).staticflickr.com/\(photo.server)/\(photo.id)_\(photo.secret)_m.jpg")
         
@@ -62,6 +76,9 @@ class FlickrImageCollectionCell: UICollectionViewCell {
                 handleError(error: "No data was returned by the request!")
                 return
             }
+            
+            let _ = Photo(data: data as NSData, location: self.location!, context: self.appDelegate.stack.context)
+            print("saved at: \(self.index)")
             
             let image = UIImage(data: data)
             performUIUpdatesOnMain {

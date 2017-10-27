@@ -55,11 +55,11 @@ class MapViewController: MyViewController {
                 self.mapView.removeAnnotation(location)
             
             case .move:
-                self.mapView.removeAnnotation(location)
-                self.mapView.addAnnotation(location)
+                fatalError("can't be done")
             
             case .update:
-                fatalError("can't be done")
+                self.mapView.removeAnnotation(location)
+                self.mapView.addAnnotation(location)
             }
         }
     }
@@ -82,14 +82,20 @@ class MapViewController: MyViewController {
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        
+        let object = view.annotation as! Location
+        
         if flag {
             
-            let object = view.annotation as! Location
             fetchedResultsController.managedObjectContext.delete(object)
             
         } else {
             let controller = storyboard?.instantiateViewController(withIdentifier: "AlbumViewController") as! AlbumViewController
-            controller.location = (view.annotation?.coordinate)!
+            let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "Photo")
+            fr.sortDescriptors = [NSSortDescriptor(key: "data", ascending: true)]
+            fr.predicate = NSPredicate(format: "location = %@", argumentArray: [object])
+            controller.location = object
+            controller.fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: delegate.stack.context, sectionNameKeyPath: nil, cacheName: nil)
             self.navigationController?.pushViewController(controller, animated: true)
             mapView.deselectAnnotation(view.annotation, animated: true)
         }
