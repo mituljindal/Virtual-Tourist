@@ -9,16 +9,19 @@
 import UIKit
 import CoreData
 
-class FlickrImageCollectionCell: UICollectionViewCell {
+class FlickrImageCollectionCell: UICollectionViewCell, NSFetchedResultsControllerDelegate {
     
     @IBOutlet weak var flickrImage: UIImageView!
+    
     var index: IndexPath!
     
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
-    var appDelegate = UIApplication.shared.delegate as! AppDelegate
+    var delegate = UIApplication.shared.delegate as! AppDelegate
     
-    var location: Location?
+    var location: Location!
+    
+    var flickr = FlickrClient.sharedInstance()
     
     var flag = false
     
@@ -32,5 +35,38 @@ class FlickrImageCollectionCell: UICollectionViewCell {
     
     func stopAnimating() {
         self.activityIndicator.stopAnimating()
+    }
+    
+    func initiate() {
+        if flag {
+            return
+        } else {
+            flag = true
+        }
+        startAnimating()
+        if nil != flickr.dataArray[location] {
+            getImage()
+        } else {
+            NotificationCenter.default.addObserver(self, selector: #selector(getImage), name: .updatedPhotos, object: nil)
+        }
+    }
+    
+    @objc func getImage() {
+        if let photo = flickr.dataArray[location] {
+            flickr.getImage(photo.photos[index.row], location) { data in
+                
+                let _ = Photo(data: data as NSData, location: self.location, context: self.delegate.stack.context)
+                let image = UIImage(data: data)
+                performUIUpdatesOnMain {
+                    self.flickrImage.image = image
+                    self.stopAnimating()
+                }
+                do {
+                    try self.delegate.stack.saveContext()
+                } catch {
+                    print("Save failed")
+                }
+            }
+        }
     }
 }

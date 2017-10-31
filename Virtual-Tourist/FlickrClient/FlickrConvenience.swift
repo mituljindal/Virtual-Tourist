@@ -67,7 +67,7 @@ extension FlickrClient {
                 photos.page += 1
                 self.dataArray[location] = photos
                 
-                self.getImages(location)
+//                self.getImages(location)
                 
 //                self.appDelegate.photos = photos.photos
 //                self.appDelegate.isData = true
@@ -79,19 +79,19 @@ extension FlickrClient {
         }
     }
     
-    func getImages(_ location: Location) {
-        
-        guard let photos = self.dataArray[location]?.photos else {
-            return
-        }
-        
-        for photo in photos {
-            getImage(photo, location)
-        }
-        
-    }
+//    func getImages(_ location: Location) {
+//
+//        guard let photos = self.dataArray[location]?.photos else {
+//            return
+//        }
+//
+//        for photo in photos {
+//            getImage(photo, location)
+//        }
+//
+//    }
     
-    func getImage(_ photo: FPhoto, _ location: Location) {
+    func getImage(_ photo: FPhoto, _ location: Location, completion: @escaping (_ completed: Data) -> (Void)) {
         
         let url =  URL(string: "https://farm\(photo.farm).staticflickr.com/\(photo.server)/\(photo.id)_\(photo.secret)_m.jpg")
         
@@ -113,7 +113,11 @@ extension FlickrClient {
                 return
             }
             
-            let _ = Photo(data: data as NSData, location: location, context: self.appDelegate.stack.context)
+//            let _ = Photo(data: data as NSData, location: location, context: self.appDelegate.stack.context)
+            
+            performUIUpdatesOnMain {
+                completion(data)
+            }
             
 //            let image = UIImage(data: data)
 //            performUIUpdatesOnMain {

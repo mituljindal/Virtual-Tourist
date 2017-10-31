@@ -26,27 +26,23 @@ class AlbumViewController: MyViewController, UICollectionViewDataSource, UIColle
         setView()
     }
     
-//    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-//        
-//        guard let _ = anObject as? Photo else {
-//            preconditionFailure("No location changes")
-//        }
-//        
-//        performUIUpdatesOnMain {
-//            self.collectionView.reloadData()
-//        }
-//    }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         print(count)
-        return (fetchedResultsController.fetchedObjects?.count)!
+        return count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FlickrCell", for: indexPath) as! FlickrImageCollectionCell
-        let photo = fetchedResultsController.object(at: indexPath) as! Photo
         
-        cell.flickrImage.image = UIImage(data: photo.data! as Data)
+        cell.location = location
+        cell.index = indexPath
+        if data {
+            let photo = fetchedResultsController.object(at: indexPath) as! Photo
+            
+            cell.flickrImage.image = UIImage(data: photo.data! as Data)
+        } else  {
+            cell.initiate()
+        }
         return cell
     }
     
@@ -65,35 +61,18 @@ class AlbumViewController: MyViewController, UICollectionViewDataSource, UIColle
                 } else {
                     data = false
                     FlickrClient.sharedInstance().getPhotos(location: location!) { count in
+                        self.count = count
+                        self.collectionView.reloadData()
                     }
                 }
             } catch let e as NSError {
                 print("Error while trying to perform a search: \n\(e)\n\(fetchedResultsController)")
                 data = false
                 FlickrClient.sharedInstance().getPhotos(location: location!) { count in
+                    self.count = count
+                    self.collectionView.reloadData()
                 }
             }
         }
-    }
-}
-
-extension AlbumViewController {
-    
-    func setView() {
-        
-        collectionViewFlowLayout.minimumLineSpacing = 3
-        collectionViewFlowLayout.minimumInteritemSpacing = 3
-        collectionViewFlowLayout.itemSize = CGSize(width: (view.frame.width/3) - 2, height: view.frame.width/3 - 2)
-        
-        mapView.delegate = self
-        mapView.isZoomEnabled = false
-        mapView.isPitchEnabled = false
-        mapView.isRotateEnabled = false
-        mapView.isScrollEnabled = false
-        mapView.addAnnotation(location!)
-        
-        let span = MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)
-        let region = MKCoordinateRegion(center: location!.coordinate, span: span)
-        mapView.setRegion(region, animated: true)
     }
 }
