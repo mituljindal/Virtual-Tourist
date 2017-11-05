@@ -39,7 +39,6 @@ class AlbumViewController: MyViewController, UICollectionViewDataSource, UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        button.isEnabled = true
         return count
     }
     
@@ -51,10 +50,13 @@ class AlbumViewController: MyViewController, UICollectionViewDataSource, UIColle
             cell.startAnimating()
         } else {
             if (fetchedResultsController.fetchedObjects?.count)! >= indexPath.row {
+                print("in cellForItemAt: \((fetchedResultsController.fetchedObjects?.count)!)")
                 cell.stopAnimating()
                 
                 let photo = fetchedResultsController.object(at: indexPath) as! Photo
                 cell.flickrImage.image = UIImage(data: photo.data! as Data)
+            } else {
+                cell.startAnimating()
             }
         }
         
@@ -83,56 +85,52 @@ class AlbumViewController: MyViewController, UICollectionViewDataSource, UIColle
         } else {
             button.titleLabel?.text = "New Collection"
         }
-        print(selection.count)
     }
     
     @IBAction func buttonPressed(_ sender: Any) {
         if button.titleLabel?.text == "New Collection" {
             data = false
-            
+            button.isEnabled = false
             count = 0
             for object in fetchedResultsController.fetchedObjects! {
                 fetchedResultsController.managedObjectContext.delete(object as! NSManagedObject)
+                
+                print("after deletion")
+                print((fetchedResultsController.fetchedObjects?.count)!)
             }
             data = false
             collectionView.reloadData()
-            FlickrClient.sharedInstance().getPhotos(location: location!, { count in
-                self.count = count
-                self.collectionView.reloadData()
-                }, { count in
-                    self.executeSearch()
-            })
+            getPhotos()
         }
     }
     
+    func getPhotos() {
+        button.isEnabled = false
+        FlickrClient.sharedInstance().getPhotos(location: location!, { count in
+            self.count = count
+            self.collectionView.reloadData()
+        }, {
+            self.executeSearch()
+        })
+    }
+    
     func executeSearch() {
-        print("executing search")
         if let fc = fetchedResultsController {
             do {
                 try fc.performFetch()
                 count = fc.fetchedObjects?.count
+                button.isEnabled = true
                 if count != 0 {
                     data = true
                     self.collectionView.reloadData()
                 } else {
                     data = false
-                    FlickrClient.sharedInstance().getPhotos(location: location!, { count in
-                        self.count = count
-                        self.collectionView.reloadData()
-                        self.button.isEnabled = true
-                        }, { count in
-                            self.executeSearch()
-                    })
+                    getPhotos()
                 }
             } catch let e as NSError {
                 print("Error while trying to perform a search: \n\(e)\n\(fetchedResultsController)")
                 data = false
-                FlickrClient.sharedInstance().getPhotos(location: location!, { count in
-                    self.count = count
-                    self.collectionView.reloadData()
-                    self.button.isEnabled = true
-                    }, { count in
-                })
+                getPhotos()
             }
         }
     }
