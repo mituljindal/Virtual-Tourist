@@ -12,6 +12,8 @@ import MapKit
 
 class AlbumViewController: MyViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
+    
+    @IBOutlet weak var noPicturesText: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var collectionViewFlowLayout: UICollectionViewFlowLayout!
@@ -30,7 +32,12 @@ class AlbumViewController: MyViewController, UICollectionViewDataSource, UIColle
         super.viewDidLoad()
         
         setView()
-        self.button.isEnabled = false
+        
+        button.isEnabled = false
+        button.layer.masksToBounds = false
+        button.contentMode = .center
+        button.titleLabel?.textAlignment = .center
+        self.button.titleLabel?.textColor = .gray
         
         fetchedResultsController?.delegate = self
         executeSearch()
@@ -78,11 +85,11 @@ class AlbumViewController: MyViewController, UICollectionViewDataSource, UIColle
             selection[indexPath] = true
         }
         if selection.count == 0 {
-            button.titleLabel?.text = "New Collection"
+            button.setTitle("New Collection", for: .normal)
             flag = true
         } else {
             flag = false
-            button.titleLabel?.text = "Remove Selected Pictures"
+            button.setTitle("Remove Selected Pictures", for: .normal)
         }
     }
     
@@ -90,6 +97,8 @@ class AlbumViewController: MyViewController, UICollectionViewDataSource, UIColle
         if flag {
             data = false
             button.isEnabled = false
+            button.setTitleColor(.gray, for: .normal)
+            
             count = 0
             for object in fetchedResultsController.fetchedObjects! {
                 fetchedResultsController.managedObjectContext.delete(object as! NSManagedObject)
@@ -109,11 +118,14 @@ class AlbumViewController: MyViewController, UICollectionViewDataSource, UIColle
                 print("deletion unsuccessful")
             }
             self.executeSearch()
+            button.setTitle("New Collection", for: .normal)
+            flag = true
         }
     }
     
     func getPhotos() {
         button.isEnabled = false
+        button.titleLabel?.textColor = .gray
         FlickrClient.sharedInstance().getPhotos(location: location!, { count in
             self.count = count
             print("count: \(count)")
@@ -131,10 +143,11 @@ class AlbumViewController: MyViewController, UICollectionViewDataSource, UIColle
             do {
                 try fc.performFetch()
                 count = fc.fetchedObjects?.count
-                button.isEnabled = true
                 if count != 0 {
                     data = true
                     self.collectionView.reloadData()
+                    self.button.isEnabled = true
+                    self.button.setTitleColor(.blue, for: .normal)
                 } else {
                     data = false
                     getPhotos()
@@ -148,8 +161,8 @@ class AlbumViewController: MyViewController, UICollectionViewDataSource, UIColle
     }
     
     func noPhotos() {
-        self.collectionView.isHidden = true
-        self.button.titleLabel?.text = "No Pictures"
-        self.button.isEnabled = false
+        print("no photos")
+        self.button.isHidden = true
+        self.noPicturesText.isHidden = false
     }
 }

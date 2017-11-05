@@ -83,6 +83,13 @@
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
+                                <label key="backgroundView" hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Pictures" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YKS-GA-VjQ">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="452"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FlickrCell" id="4A1-lQ-9Qy" customClass="FlickrImageCollectionCell" customModule="Virtual_Tourist" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="133" height="133"/>
@@ -113,10 +120,10 @@
                                     <outlet property="prefetchDataSource" destination="kdu-ar-q4i" id="dOp-KN-2Pf"/>
                                 </connections>
                             </collectionView>
-                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lod-m4-n3j">
+                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="fill" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="lod-m4-n3j">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <state key="normal" title="New Collection">
-                                    <color key="titleColor" red="0.20555023849010468" green="0.4728146493434906" blue="0.96476197242736816" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <color key="titleColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="buttonPressed:" destination="kdu-ar-q4i" eventType="touchUpInside" id="iB4-1S-oMu"/>
@@ -145,6 +152,7 @@
                         <outlet property="collectionView" destination="YTO-Lc-SO3" id="z6A-d0-42U"/>
                         <outlet property="collectionViewFlowLayout" destination="SXa-jN-Y4c" id="yow-l9-QXK"/>
                         <outlet property="mapView" destination="9ad-2J-6Cx" id="UcH-2h-cxa"/>
+                        <outlet property="noPicturesText" destination="YKS-GA-VjQ" id="iFH-8P-he3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Kv-Mz-j1a" userLabel="First Responder" sceneMemberID="firstResponder"/>
