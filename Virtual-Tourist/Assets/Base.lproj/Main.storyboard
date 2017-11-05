@@ -113,9 +113,11 @@
                                     <outlet property="prefetchDataSource" destination="kdu-ar-q4i" id="dOp-KN-2Pf"/>
                                 </connections>
                             </collectionView>
-                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lod-m4-n3j">
+                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lod-m4-n3j">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
-                                <state key="normal" title="New Collection"/>
+                                <state key="normal" title="New Collection">
+                                    <color key="titleColor" red="0.20555023849010468" green="0.4728146493434906" blue="0.96476197242736816" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
                                 <connections>
                                     <action selector="buttonPressed:" destination="kdu-ar-q4i" eventType="touchUpInside" id="iB4-1S-oMu"/>
                                 </connections>

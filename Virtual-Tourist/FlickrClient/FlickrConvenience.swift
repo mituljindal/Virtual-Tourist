@@ -72,6 +72,8 @@ extension FlickrClient {
                 }
                 
                 self.getImages(location, completion2)
+            } else {
+                completion(0)
             }
         }
     }

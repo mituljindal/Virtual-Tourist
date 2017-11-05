@@ -20,6 +20,7 @@ class AlbumViewController: MyViewController, UICollectionViewDataSource, UIColle
     var location: Location?
     var count: Int!
     var data: Bool!
+    var flag = true
     
     var selection = [IndexPath: Bool]()
     
@@ -28,9 +29,6 @@ class AlbumViewController: MyViewController, UICollectionViewDataSource, UIColle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        button.titleEdgeInsets.left = 1
-        button.titleEdgeInsets.right = 1
-        button.titleLabel?.textAlignment = .center
         setView()
         self.button.isEnabled = false
         
@@ -50,7 +48,6 @@ class AlbumViewController: MyViewController, UICollectionViewDataSource, UIColle
             cell.startAnimating()
         } else {
             if (fetchedResultsController.fetchedObjects?.count)! >= indexPath.row {
-                print("in cellForItemAt: \((fetchedResultsController.fetchedObjects?.count)!)")
                 cell.stopAnimating()
                 
                 let photo = fetchedResultsController.object(at: indexPath) as! Photo
@@ -80,27 +77,38 @@ class AlbumViewController: MyViewController, UICollectionViewDataSource, UIColle
             cell?.layer.opacity = 0.5
             selection[indexPath] = true
         }
-        if selection.count > 0 {
-            button.titleLabel?.text = "Remove Selected Pictures"
-        } else {
+        if selection.count == 0 {
             button.titleLabel?.text = "New Collection"
+            flag = true
+        } else {
+            flag = false
+            button.titleLabel?.text = "Remove Selected Pictures"
         }
     }
     
     @IBAction func buttonPressed(_ sender: Any) {
-        if button.titleLabel?.text == "New Collection" {
+        if flag {
             data = false
             button.isEnabled = false
             count = 0
             for object in fetchedResultsController.fetchedObjects! {
                 fetchedResultsController.managedObjectContext.delete(object as! NSManagedObject)
-                
-                print("after deletion")
-                print((fetchedResultsController.fetchedObjects?.count)!)
             }
             data = false
             collectionView.reloadData()
             getPhotos()
+        } else {
+            for (index, _) in selection {
+                let photo = fetchedResultsController.object(at: index) as! Photo
+                fetchedResultsController.managedObjectContext.delete(photo)
+                selection[index] = nil
+            }
+            do {
+                try self.delegate.stack.saveContext()
+            } catch {
+                print("deletion unsuccessful")
+            }
+            self.executeSearch()
         }
     }
     
@@ -108,6 +116,10 @@ class AlbumViewController: MyViewController, UICollectionViewDataSource, UIColle
         button.isEnabled = false
         FlickrClient.sharedInstance().getPhotos(location: location!, { count in
             self.count = count
+            print("count: \(count)")
+            if count == 0 {
+                self.noPhotos()
+            }
             self.collectionView.reloadData()
         }, {
             self.executeSearch()
@@ -133,5 +145,11 @@ class AlbumViewController: MyViewController, UICollectionViewDataSource, UIColle
                 getPhotos()
             }
         }
+    }
+    
+    func noPhotos() {
+        self.collectionView.isHidden = true
+        self.button.titleLabel?.text = "No Pictures"
+        self.button.isEnabled = false
     }
 }
