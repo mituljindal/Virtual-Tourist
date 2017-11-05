@@ -34,10 +34,8 @@ class AlbumViewController: MyViewController, UICollectionViewDataSource, UIColle
         setView()
         
         button.isEnabled = false
-        button.layer.masksToBounds = false
-        button.contentMode = .center
         button.titleLabel?.textAlignment = .center
-        self.button.titleLabel?.textColor = .gray
+        button.setTitleColor(.gray, for: .normal)
         
         fetchedResultsController?.delegate = self
         executeSearch()
@@ -50,17 +48,15 @@ class AlbumViewController: MyViewController, UICollectionViewDataSource, UIColle
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FlickrCell", for: indexPath) as! FlickrImageCollectionCell
         
+        cell.startAnimating()
         if !data {
             cell.flickrImage.image = nil
-            cell.startAnimating()
         } else {
             if (fetchedResultsController.fetchedObjects?.count)! >= indexPath.row {
-                cell.stopAnimating()
                 
                 let photo = fetchedResultsController.object(at: indexPath) as! Photo
+                cell.stopAnimating()
                 cell.flickrImage.image = UIImage(data: photo.data! as Data)
-            } else {
-                cell.startAnimating()
             }
         }
         
