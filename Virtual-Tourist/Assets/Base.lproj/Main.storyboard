@@ -75,7 +75,7 @@
                                 </constraints>
                             </mapView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="YTO-Lc-SO3">
-                                <rect key="frame" x="0.0" y="171" width="375" height="496"/>
+                                <rect key="frame" x="0.0" y="171" width="375" height="452"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="SXa-jN-Y4c">
                                     <size key="itemSize" width="133" height="133"/>
@@ -113,21 +113,33 @@
                                     <outlet property="prefetchDataSource" destination="kdu-ar-q4i" id="dOp-KN-2Pf"/>
                                 </connections>
                             </collectionView>
+                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lod-m4-n3j">
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <state key="normal" title="New Collection"/>
+                                <connections>
+                                    <action selector="buttonPressed:" destination="kdu-ar-q4i" eventType="touchUpInside" id="iB4-1S-oMu"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="4Rd-BF-PDs" firstAttribute="trailing" secondItem="lod-m4-n3j" secondAttribute="trailing" id="0s7-FS-5ZD"/>
+                            <constraint firstItem="lod-m4-n3j" firstAttribute="top" secondItem="YTO-Lc-SO3" secondAttribute="bottom" id="20S-Wf-5hD"/>
                             <constraint firstItem="9ad-2J-6Cx" firstAttribute="leading" secondItem="4Rd-BF-PDs" secondAttribute="leading" id="3Jt-t9-dzY"/>
+                            <constraint firstItem="4Rd-BF-PDs" firstAttribute="bottom" secondItem="lod-m4-n3j" secondAttribute="bottom" id="ANX-kP-Hvn"/>
                             <constraint firstItem="YTO-Lc-SO3" firstAttribute="leading" secondItem="4Rd-BF-PDs" secondAttribute="leading" id="Er2-yK-c6e"/>
                             <constraint firstItem="4Rd-BF-PDs" firstAttribute="trailing" secondItem="9ad-2J-6Cx" secondAttribute="trailing" id="TtW-sV-NcO"/>
                             <constraint firstItem="9ad-2J-6Cx" firstAttribute="top" secondItem="4Rd-BF-PDs" secondAttribute="top" id="bfQ-vr-Q1K"/>
-                            <constraint firstItem="4Rd-BF-PDs" firstAttribute="bottom" secondItem="YTO-Lc-SO3" secondAttribute="bottom" id="eDO-7r-gX9"/>
+                            <constraint firstItem="4Rd-BF-PDs" firstAttribute="bottom" secondItem="YTO-Lc-SO3" secondAttribute="bottom" constant="44" id="eDO-7r-gX9"/>
                             <constraint firstItem="4Rd-BF-PDs" firstAttribute="trailing" secondItem="YTO-Lc-SO3" secondAttribute="trailing" id="hF8-kD-EUB"/>
+                            <constraint firstItem="lod-m4-n3j" firstAttribute="leading" secondItem="4Rd-BF-PDs" secondAttribute="leading" id="sLv-mW-v4w"/>
                             <constraint firstItem="YTO-Lc-SO3" firstAttribute="top" secondItem="9ad-2J-6Cx" secondAttribute="bottom" constant="1" id="t8j-bY-BjB"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="4Rd-BF-PDs"/>
                     </view>
                     <navigationItem key="navigationItem" id="Tc8-Pk-oHa"/>
                     <connections>
+                        <outlet property="button" destination="lod-m4-n3j" id="oUC-eL-luC"/>
                         <outlet property="collectionView" destination="YTO-Lc-SO3" id="z6A-d0-42U"/>
                         <outlet property="collectionViewFlowLayout" destination="SXa-jN-Y4c" id="yow-l9-QXK"/>
                         <outlet property="mapView" destination="9ad-2J-6Cx" id="UcH-2h-cxa"/>

@@ -25,6 +25,8 @@ class FlickrImageCollectionCell: UICollectionViewCell, NSFetchedResultsControlle
     
     var flag = false
     
+    var savedPhoto: Photo!
+    
     func startAnimating() {
         self.activityIndicator.startAnimating()
         activityIndicator.hidesWhenStopped = true
@@ -38,7 +40,9 @@ class FlickrImageCollectionCell: UICollectionViewCell, NSFetchedResultsControlle
     }
     
     func initiate() {
+        print("\(flag): flag for indexpath \(index.row)")
         if flag {
+            print("returning \(index.row)")
             return
         } else {
             flag = true
@@ -52,6 +56,7 @@ class FlickrImageCollectionCell: UICollectionViewCell, NSFetchedResultsControlle
     }
     
     @objc func getImage() {
+        print("geting \(index.row)")
         if let photo = flickr.dataArray[location] {
             flickr.getImage(photo.photos[index.row], location) { data in
                 
@@ -68,5 +73,9 @@ class FlickrImageCollectionCell: UICollectionViewCell, NSFetchedResultsControlle
                 }
             }
         }
+    }
+    
+    func delete() {
+        
     }
 }

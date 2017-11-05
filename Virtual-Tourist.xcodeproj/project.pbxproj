@@ -88,13 +88,6 @@
 			path = Assets;
 			sourceTree = "<group>";
 		};
-		AC1730341FA147B7003791E4 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		ACA468341F9F49E8001D43C2 = {
 			isa = PBXGroup;
 			children = (
@@ -116,7 +109,6 @@
 			children = (
 				ACA468401F9F49E8001D43C2 /* AppDelegate.swift */,
 				ACA4684C1F9F49E8001D43C2 /* Info.plist */,
-				AC1730341FA147B7003791E4 /* Supporting Files */,
 				AC1730281FA14372003791E4 /* CoreData */,
 				ACB61C3A1FA0CD1B0023F6DF /* View */,
 				ACB61C321FA094F20023F6DF /* Helper */,

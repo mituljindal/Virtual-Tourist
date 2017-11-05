@@ -50,3 +50,24 @@ extension MapViewController: UIGestureRecognizerDelegate {
         return true
     }
 }
+
+extension AlbumViewController {
+    
+    func setView() {
+        
+        collectionViewFlowLayout.minimumLineSpacing = 3
+        collectionViewFlowLayout.minimumInteritemSpacing = 3
+        collectionViewFlowLayout.itemSize = CGSize(width: (view.frame.width/3) - 2, height: view.frame.width/3 - 2)
+        
+        mapView.delegate = self
+        mapView.isZoomEnabled = false
+        mapView.isPitchEnabled = false
+        mapView.isRotateEnabled = false
+        mapView.isScrollEnabled = false
+        mapView.addAnnotation(location!)
+        
+        let span = MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)
+        let region = MKCoordinateRegion(center: location!.coordinate, span: span)
+        mapView.setRegion(region, animated: true)
+    }
+}

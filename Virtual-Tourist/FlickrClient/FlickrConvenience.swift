@@ -10,21 +10,25 @@ import Foundation
 
 extension FlickrClient {
     
-    func getPhotos(location: Location, completion: @escaping (_ count: Int) -> (Void)) {
+    func getPhotos(location: Location, _ completion: @escaping (_ count: Int) -> (Void), _ completion2: @escaping (_ count: Int) -> (Void)) {
     
         let page: Int
         if let photos = dataArray[location] {
             if(photos.page > photos.lastPage) {
+                print(1)
                 return
             } else {
+                print(2)
                 page = photos.page
                 dataArray[location] = nil
             }
         } else {
+            print(3)
             page = 1
         }
         
         var urlString = API.url + "&api_key=" + API.apiKey + "&lat=\(location.latitude)&lon=\(location.longitude)&format=json&nojsoncallback=1&per_page=21&page=\(page)"
+        print(urlString)
         
         guard let url = URL(string: urlString) else {
             return
@@ -64,7 +68,7 @@ extension FlickrClient {
             
             if let a = result["photos"] as? [String: AnyObject] {
                 var photos = FlickrPhotos(a)
-                photos.page += 1
+                photos.page = page + 1
                 self.dataArray[location] = photos
                 
 //                self.getImages(location)
