@@ -18,6 +18,15 @@ class MapViewController: MyViewController {
     var annotations = [NSManagedObject]()
     var flag = false
     
+    var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>! {
+        didSet {
+            // Whenever the frc changes, we execute the search and
+            // reload the table
+            fetchedResultsController?.delegate = self
+            executeSearch()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -92,7 +101,7 @@ class MapViewController: MyViewController {
         } else {
             let controller = storyboard?.instantiateViewController(withIdentifier: "AlbumViewController") as! AlbumViewController
             let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "Photo")
-            fr.sortDescriptors = [NSSortDescriptor(key: "data", ascending: true)]
+            fr.sortDescriptors = [NSSortDescriptor(key: "data", ascending: false)]
             fr.predicate = NSPredicate(format: "location = %@", argumentArray: [object])
             controller.location = object
             controller.fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: delegate.stack.context, sectionNameKeyPath: nil, cacheName: nil)
@@ -111,7 +120,7 @@ class MapViewController: MyViewController {
         flag = !flag
     }
     
-    override func executeSearch() {
+    func executeSearch() {
         
         if let fc = fetchedResultsController {
             do {

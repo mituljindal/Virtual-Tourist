@@ -10,7 +10,7 @@ import Foundation
 
 extension FlickrClient {
     
-    func getPhotos(location: Location, _ completion: @escaping (_ count: Int) -> (Void), _ completion2: @escaping (_ count: Int) -> (Void)) {
+    func getPhotos(location: Location, _ completion: @escaping (_ count: Int) -> (Void), _ completion2: @escaping (_ count: Data) -> (Void)) {
     
         let page: Int
         if let photos = dataArray[location] {
@@ -71,31 +71,39 @@ extension FlickrClient {
                 photos.page = page + 1
                 self.dataArray[location] = photos
                 
-//                self.getImages(location)
+//
                 
 //                self.appDelegate.photos = photos.photos
 //                self.appDelegate.isData = true
 //                NotificationCenter.default.post(name: .updatedPhotos, object: nil)
+                print("dataset received")
                 performUIUpdatesOnMain {
+                    print("sending count to main")
                     completion(photos.photos.count)
                 }
+                
+                print("Getting images")
+                self.getImages(location, completion2)
             }
         }
     }
     
-//    func getImages(_ location: Location) {
-//
-//        guard let photos = self.dataArray[location]?.photos else {
-//            return
-//        }
-//
-//        for photo in photos {
-//            getImage(photo, location)
-//        }
-//
-//    }
+    func getImages(_ location: Location, _ completion2: @escaping (_ count: Data) -> (Void)) {
+
+        guard let photos = self.dataArray[location]?.photos else {
+            return
+        }
+
+        var i = 0
+        for photo in photos {
+            print("getting \(i)")
+            i += 1
+            getImage(photo, location, completion2)
+        }
+
+    }
     
-    func getImage(_ photo: FPhoto, _ location: Location, completion: @escaping (_ completed: Data) -> (Void)) {
+    func getImage(_ photo: FPhoto, _ location: Location, _ completion: @escaping (_ completed: Data) -> (Void)) {
         
         let url =  URL(string: "https://farm\(photo.farm).staticflickr.com/\(photo.server)/\(photo.id)_\(photo.secret)_m.jpg")
         
@@ -117,7 +125,13 @@ extension FlickrClient {
                 return
             }
             
-//            let _ = Photo(data: data as NSData, location: location, context: self.appDelegate.stack.context)
+            let _ = Photo(data: data as NSData, location: location, context: self.appDelegate.stack.context)
+            do {
+                try self.appDelegate.stack.saveContext()
+            } catch {
+                print("Save failed")
+            }
+
             
             performUIUpdatesOnMain {
                 completion(data)

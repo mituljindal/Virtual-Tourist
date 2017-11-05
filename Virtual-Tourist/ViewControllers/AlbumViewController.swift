@@ -23,6 +23,8 @@ class AlbumViewController: MyViewController, UICollectionViewDataSource, UIColle
     
     var selection = [IndexPath: Bool]()
     
+    var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,6 +33,9 @@ class AlbumViewController: MyViewController, UICollectionViewDataSource, UIColle
         button.titleLabel?.textAlignment = .center
         setView()
         self.button.isEnabled = false
+        
+        fetchedResultsController?.delegate = self
+        executeSearch()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -39,18 +44,28 @@ class AlbumViewController: MyViewController, UICollectionViewDataSource, UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print(indexPath)
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FlickrCell", for: indexPath) as! FlickrImageCollectionCell
         
         cell.location = location
         cell.index = indexPath
-        if data {
-            let photo = fetchedResultsController.object(at: indexPath) as! Photo
-            
-            cell.flickrImage.image = UIImage(data: photo.data! as Data)
-        } else  {
-            cell.initiate()
+        if !data {
+            cell.flickrImage.image = nil
+            cell.startAnimating()
+        } else {
+            if (fetchedResultsController.fetchedObjects?.count)! >= indexPath.row {
+                cell.stopAnimating()
+                
+                let photo = fetchedResultsController.object(at: indexPath) as! Photo
+                cell.flickrImage.image = UIImage(data: photo.data! as Data)
+            }
         }
+//        if data {
+//            let photo = fetchedResultsController.object(at: indexPath) as! Photo
+//
+//            cell.flickrImage.image = UIImage(data: photo.data! as Data)
+//        } else  {
+//            cell.initiate()
+//        }
         if let _ = selection[indexPath] {
             cell.layer.opacity = 0.5
         } else {
@@ -92,18 +107,20 @@ class AlbumViewController: MyViewController, UICollectionViewDataSource, UIColle
                 self.count = count
                 self.collectionView.reloadData()
                 }, { count in
+                    self.executeSearch()
             })
         }
     }
     
-    override func executeSearch() {
-        
+    func executeSearch() {
+        print("executing search")
         if let fc = fetchedResultsController {
             do {
                 try fc.performFetch()
                 count = fc.fetchedObjects?.count
                 if count != 0 {
                     data = true
+                    self.collectionView.reloadData()
                 } else {
                     data = false
                     FlickrClient.sharedInstance().getPhotos(location: location!, { count in
@@ -111,6 +128,7 @@ class AlbumViewController: MyViewController, UICollectionViewDataSource, UIColle
                         self.collectionView.reloadData()
                         self.button.isEnabled = true
                         }, { count in
+                            self.executeSearch()
                     })
                 }
             } catch let e as NSError {

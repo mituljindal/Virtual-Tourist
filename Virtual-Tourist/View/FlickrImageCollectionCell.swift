@@ -28,9 +28,9 @@ class FlickrImageCollectionCell: UICollectionViewCell, NSFetchedResultsControlle
     var savedPhoto: Photo!
     
     func startAnimating() {
+        activityIndicator.center = self.flickrImage.center
         self.activityIndicator.startAnimating()
         activityIndicator.hidesWhenStopped = true
-        activityIndicator.center = self.flickrImage.center
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
         self.flickrImage.addSubview(activityIndicator)
     }
@@ -57,22 +57,22 @@ class FlickrImageCollectionCell: UICollectionViewCell, NSFetchedResultsControlle
     
     @objc func getImage() {
         print("geting \(index.row)")
-        if let photo = flickr.dataArray[location] {
-            flickr.getImage(photo.photos[index.row], location) { data in
-                
-                let _ = Photo(data: data as NSData, location: self.location, context: self.delegate.stack.context)
-                let image = UIImage(data: data)
-                performUIUpdatesOnMain {
-                    self.flickrImage.image = image
-                    self.stopAnimating()
-                }
-                do {
-                    try self.delegate.stack.saveContext()
-                } catch {
-                    print("Save failed")
-                }
-            }
-        }
+//        if let photo = flickr.dataArray[location] {
+//            flickr.getImage(photo.photos[index.row], location) { data in
+//
+//                let _ = Photo(data: data as NSData, location: self.location, context: self.delegate.stack.context)
+//                let image = UIImage(data: data)
+//                performUIUpdatesOnMain {
+//                    self.flickrImage.image = image
+//                    self.stopAnimating()
+//                }
+//                do {
+//                    try self.delegate.stack.saveContext()
+//                } catch {
+//                    print("Save failed")
+//                }
+//            }
+//        }
     }
     
     func delete() {
