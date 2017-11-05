@@ -15,6 +15,7 @@ extension FlickrClient {
         let page: Int
         if let photos = dataArray[location] {
             if(photos.page > photos.lastPage) {
+                completion(0)
                 return
             } else {
                 page = photos.page

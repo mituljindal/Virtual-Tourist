@@ -124,7 +124,7 @@ class AlbumViewController: MyViewController, UICollectionViewDataSource, UIColle
         button.titleLabel?.textColor = .gray
         FlickrClient.sharedInstance().getPhotos(location: location!, { count in
             self.count = count
-            print("count: \(count)")
+            
             if count == 0 {
                 self.noPhotos()
             }
@@ -157,7 +157,6 @@ class AlbumViewController: MyViewController, UICollectionViewDataSource, UIColle
     }
     
     func noPhotos() {
-        print("no photos")
         self.button.isHidden = true
         self.noPicturesText.isHidden = false
     }
