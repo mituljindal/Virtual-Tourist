@@ -46,8 +46,6 @@ class AlbumViewController: MyViewController, UICollectionViewDataSource, UIColle
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FlickrCell", for: indexPath) as! FlickrImageCollectionCell
         
-        cell.location = location
-        cell.index = indexPath
         if !data {
             cell.flickrImage.image = nil
             cell.startAnimating()
@@ -59,13 +57,8 @@ class AlbumViewController: MyViewController, UICollectionViewDataSource, UIColle
                 cell.flickrImage.image = UIImage(data: photo.data! as Data)
             }
         }
-//        if data {
-//            let photo = fetchedResultsController.object(at: indexPath) as! Photo
-//
-//            cell.flickrImage.image = UIImage(data: photo.data! as Data)
-//        } else  {
-//            cell.initiate()
-//        }
+        
+//        Selected images will remain selected
         if let _ = selection[indexPath] {
             cell.layer.opacity = 0.5
         } else {

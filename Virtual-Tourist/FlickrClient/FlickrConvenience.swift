@@ -71,11 +71,6 @@ extension FlickrClient {
                 photos.page = page + 1
                 self.dataArray[location] = photos
                 
-//
-                
-//                self.appDelegate.photos = photos.photos
-//                self.appDelegate.isData = true
-//                NotificationCenter.default.post(name: .updatedPhotos, object: nil)
                 print("dataset received")
                 performUIUpdatesOnMain {
                     print("sending count to main")
@@ -131,17 +126,10 @@ extension FlickrClient {
             } catch {
                 print("Save failed")
             }
-
             
             performUIUpdatesOnMain {
                 completion(data)
             }
-            
-//            let image = UIImage(data: data)
-//            performUIUpdatesOnMain {
-//                self.activityIndicator.stopAnimating()
-//                self.flickrImage.image = image
-//            }
         }
     }
 }

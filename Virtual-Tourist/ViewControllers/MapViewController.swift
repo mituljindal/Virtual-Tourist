@@ -101,7 +101,7 @@ class MapViewController: MyViewController {
         } else {
             let controller = storyboard?.instantiateViewController(withIdentifier: "AlbumViewController") as! AlbumViewController
             let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "Photo")
-            fr.sortDescriptors = [NSSortDescriptor(key: "data", ascending: false)]
+            fr.sortDescriptors = [NSSortDescriptor(key: "time", ascending: true)]
             fr.predicate = NSPredicate(format: "location = %@", argumentArray: [object])
             controller.location = object
             controller.fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: delegate.stack.context, sectionNameKeyPath: nil, cacheName: nil)
