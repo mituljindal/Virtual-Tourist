@@ -75,7 +75,7 @@ class MapViewController: MyViewController {
     
     @objc func addPin(gesture: UIGestureRecognizer) {
         
-        if gesture.state == .ended {
+        if gesture.state == .began {
             let point = gesture.location(in: mapView)
             let coordinate = self.mapView.convert(point, toCoordinateFrom: mapView)
             
